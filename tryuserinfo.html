@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<title>User Info</title>
+<meta charset="UTF-8">
+<script src = "scriptsrc.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+
+table {
+    border-collapse: collapse ;
+    width: 150% ;
+}
+
+table, th, td {
+    border: 2px solid black ;
+    height: 25px ;
+}
+
+</style>
+<script type="text/javascript">
+  function refresh() {
+    location.reload() ;
+  }
+  
+</script>
+<body>
+
+<div class="w3-top">
+  <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    <a href="About.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">About</a>
+  </div>
+</div>
+
+
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:43px;" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4 class="w3-bar-item"><b>Menu</b></h4>
+  <a class="w3-bar-item w3-button w3-hover-black" href="index.html">Home</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="tryuserinfo.html">User Details</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="trycontestinfo.html">Contest Details</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="tryblog.html">Blog Posts</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="tryproblem.html">Problem Set</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="tryavcontests.html">Available Contests</a>
+</nav>
+
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+
+<div class="w3-main" style="margin-left:250px">
+
+  <div class="w3-row w3-padding-64">
+    <div class="w3-twothird w3-container">
+      <h1 class="w3-text-teal" style="font-size:275%;" style="text-align:center;">User Details</h1>
+      
+      <div class="w3-twothird w3-container">
+        <h3 style="font-size: 160%">About User</h3>
+        <p style="font-size: 140%">Enter User handle</p> 
+        <input type="text" id = "handles" name = "u_handles" value = "shivam">
+        <button type="button" class="submit-button" onclick="call_user_api()">Go</button>
+        <button onclick="refresh()">Refresh</button>
+      </div>
+
+
+      <div class="w3-twothird w3-container" id = "for-error-1" style = "font-size: 120%">
+        <p id = "error-sentence-1"></p>
+      </div>
+
+
+      <div class="w3-twothird w3-container" id = "for-output-1" style="font-size: 120%">
+        <p id = "show-titlePhoto"></p>
+        <p id = "show-firstname"></p>
+        <p id = "show-lastname"></p>
+        <p id = "show-handle"></p>
+        <p id = "show-city""></p>
+        <p id = "show-organization"></p>
+        <p id = "show-rank"></p>
+        <p id = "show-maxrank"></p>
+        <p id = "show-rating"></p>
+        <p id = "show-max-rating"></p>
+        <p id = "show-contribution"></p>
+        <p id = "show-friendscount"></p> 
+      </div>
+
+      <div class="w3-twothird w3-container" id = "correct-result">
+        <!-- To display user history -->
+    
+        <h3 style="font-size: 160%"> User History </h3>
+        <p style="font-size: 140%">Enter User handle</p> 
+        <input type="text" id = "handle_history_in" name="handle_hist_in">
+        <button type="button" class="submit-button" onclick="call_history()">Go</button>
+        <button onclick="refresh()">Refresh</button>
+      </div>
+
+      <div class="w3-twothird w3-container" id = "for-error-2" style = "font-size: 120%">
+        <p id = "error-sentence-2"></p>
+      </div>
+
+      <div class="w3-twothird w3-container" id = "for-output-2" style="font-size: 120%">
+        <br>
+        <p id = "previous-ratings-list"></p>
+        <table id="old-ratings-list">
+        </table>    
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+var mySidebar = document.getElementById("mySidebar");
+var overlayBg = document.getElementById("myOverlay");
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidebar.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+function w3_close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
